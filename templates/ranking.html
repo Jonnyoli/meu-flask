@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 900px; margin: auto; padding: 2rem;">
+    <h1 style="text-align: center; font-size: 2.5rem; color: #2c3e50; margin-bottom: 2rem;">
+        🏆 Ranking de Serviços
+    </h1>
+
+    <table style="width: 100%; border-collapse: collapse; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden;">
+        <thead style="background: linear-gradient(90deg, #3498db, #9b59b6); color: white;">
+            <tr>
+                <th style="padding: 1rem;">🏅 Posição</th>
+                <th style="padding: 1rem;">👤 Utilizador</th>
+                <th style="padding: 1rem;">⏱️ Duração</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in ranking %}
+                <tr style="background-color: {{ loop.index0 % 2 == 0 and '#f9f9f9' or '#ffffff' }};">
+                    <td style="text-align: center; padding: 1rem; font-weight: bold;">
+                        {{ loop.index }}
+                    </td>
+                    <td style="text-align: center; padding: 1rem;">
+                        {{ item[0] }}
+                    </td>
+                    <td style="text-align: center; padding: 1rem; font-family: monospace;">
+                        {% set total_segundos = item[1] %}
+                        {% set horas = (total_segundos // 3600) %}
+                        {% set minutos = (total_segundos // 60) % 60 %}
+                        {% set segundos = total_segundos % 60 %}
+                        {{ '%02d:%02d:%02d' % (horas, minutos, segundos) }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if not ranking %}
+        <p style="text-align: center; color: gray; margin-top: 2rem;">Ainda não existem registos.</p>
+    {% endif %}
+</div>
+{% endblock %}

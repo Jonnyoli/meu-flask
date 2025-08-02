@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Utilizadores por Cargo{% endblock %}
+
+{% block content %}
+<h1 style="font-family: 'Segoe UI', sans-serif; color: #2c3e50; text-align: center; margin-bottom: 40px;">
+  👥 Utilizadores por Cargo
+</h1>
+
+{% if usuarios %}
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;">
+    {% for cargo in [
+      'Comandante-Geral', 'Tentente-General', 'Major-General', 'Brigadeiro-General',
+      'Coronel', 'Tenente Coronel', 'Major', 'Capitão', 'Tenente','Alferes', 'Aspirante Oficial', 
+      'Sargento Mor', 'Sargento Chefe', 'Primeiro Sargento', 'Segundo Sargento', 'Furriel',
+      'Cabo Mor', 'Cabo Chefe', 'Cabo', 'Guarda Principal', 'Guarda', 'Guarda Provisorio'
+    ] %}
+      <div style="
+        background: linear-gradient(145deg, #f0f0f0, #dcdcdc);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.12), inset 0 -1px 2px rgba(0,0,0,0.04);
+        border: 1px solid #ccc;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+      " onmouseover="this.style.transform='scale(1.015)'; this.style.boxShadow='0 10px 18px rgba(0,0,0,0.15)'" 
+         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.12)'">
+
+        <h2 style="color: #34495e; font-size: 22px; font-weight: bold; margin-bottom: 16px;">
+          👮 {{ cargo }}
+        </h2>
+
+        {% if usuarios[cargo] %}
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            {% for membro in usuarios[cargo] %}
+              <li style="
+                background-color: #ffffff;
+                margin-bottom: 8px;
+                padding: 10px 14px;
+                border-radius: 10px;
+                font-weight: 500;
+                color: #2c3e50;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+                transition: background 0.3s;
+              " onmouseover="this.style.background='#ecf0f1'" onmouseout="this.style.background='#ffffff'">
+                {{ membro }}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p style="font-style: italic; color: #7f8c8d;">Sem membros neste cargo.</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p style="color: #7f8c8d; font-style: italic; text-align: center;">Não foram encontrados utilizadores.</p>
+{% endif %}
+{% endblock %}
